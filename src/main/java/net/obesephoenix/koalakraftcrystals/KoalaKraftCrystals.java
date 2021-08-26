@@ -1,5 +1,6 @@
 package net.obesephoenix.koalakraftcrystals;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class KoalaKraftCrystals extends JavaPlugin {
@@ -7,7 +8,7 @@ public final class KoalaKraftCrystals extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
+        
     }
 
     @Override

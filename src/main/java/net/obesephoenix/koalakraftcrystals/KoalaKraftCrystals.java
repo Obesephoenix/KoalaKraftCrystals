@@ -10,6 +10,7 @@ public final class KoalaKraftCrystals extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         CommandHandler.registerCommands();
+        this.getCommand("kkc").setExecutor(new CommandHandler());
     }
 
     @Override

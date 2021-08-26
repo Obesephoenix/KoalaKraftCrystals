@@ -1,16 +1,18 @@
 package net.obesephoenix.koalakraftcrystals;
 
-import net.obesephoenix.koalakraftcrystals.commands.CommandHandler;
-import org.bukkit.Bukkit;
+import net.obesephoenix.koalakraftcrystals.commands.KKCommandHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class KoalaKraftCrystals extends JavaPlugin {
 
+    public static KoalaKraftCrystals instance;
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
-        CommandHandler.registerCommands();
-        this.getCommand("kkc").setExecutor(new CommandHandler());
+        instance = this;
+
+        KKCommandHandler.registerCommands();
+        this.getCommand("kkc").setExecutor(new KKCommandHandler());
     }
 
     @Override

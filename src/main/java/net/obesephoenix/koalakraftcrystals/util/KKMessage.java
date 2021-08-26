@@ -13,6 +13,7 @@ public class KKMessage {
             KKMessage.class.getResourceAsStream("en-us.yml")));
 
     public static String format(String key, Object[] args) {return format(key, args, true);}
+    public static String format(String key) {return format(key, new Object[0], true);}
     public static String format(String key, Object[] args, boolean prefix) {
         String message = prefix ?  messageFile.getString("prefix")  + " " + messageFile.getString(key)
                 : messageFile.getString(key);

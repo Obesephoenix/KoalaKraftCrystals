@@ -9,9 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CommandHandler implements CommandExecutor {
+public class KKCommandHandler implements CommandExecutor {
 
     private static final List<KKCommand> commands = new ArrayList<>();
+
+    public static void registerCommands() {
+        registerCommand(new DefaultCommand());
+    }
 
     public static void registerCommand(KKCommand command) {
         commands.add(command);
@@ -33,10 +37,6 @@ public class CommandHandler implements CommandExecutor {
             }
         }
         return null;
-    }
-
-    public static void registerCommands() {
-
     }
 
     @Override

@@ -1,0 +1,6 @@
+name: KoalaKraftCrystals
+version: ${project.version}
+main: net.obesephoenix.koalakraftcrystals.KoalakKaftCrystals
+api-version: 1.17
+authors: [ Obesephoenix ]
+description: A private plugin that adds custom crystals to the KoalaKraft SMP!

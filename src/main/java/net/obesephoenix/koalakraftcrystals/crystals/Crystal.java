@@ -82,4 +82,8 @@ public abstract class Crystal {
         return item;
     }
 
+    public String getName() {return name;}
+    public String getID() {return id;}
+    public String getTextureURL() {return textureURL;}
+    public Map<PotionEffectType, Integer> getEffects() {return effects;}
 }

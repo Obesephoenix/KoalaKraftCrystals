@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 public class DefaultCommand extends KKCommand {
 
     public DefaultCommand() {
-        super("default", "0", "/kkc");
+        super("default", "default_command", "/kkc");
     }
 
     @Override

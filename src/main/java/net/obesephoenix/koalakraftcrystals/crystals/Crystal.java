@@ -9,6 +9,8 @@ import java.util.UUID;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals;
+import org.apache.commons.lang.WordUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.libs.org.codehaus.plexus.util.Base64;
@@ -33,11 +35,11 @@ public abstract class Crystal {
         this.effects = effects;
     }
 
-    private List<String> addLorePrefix(List<String> lore) {
+    protected List<String> addLorePrefix(List<String> lore) {
         return lore;
     }
 
-    private List<String> addLoreSuffix(List<String> lore) {
+    protected List<String> addLoreSuffix(List<String> lore) {
         return lore;
     }
 
@@ -46,12 +48,13 @@ public abstract class Crystal {
         lore = this.addLorePrefix(lore);
 
         lore.add(" ");
-        lore.add("Holding this gem grants the bearer");
-        lore.add("the power of - ");
+        lore.add(ChatColor.GRAY + "Holding this gem grants the bearer");
+        lore.add(ChatColor.GRAY + "the power of - ");
+        lore.add(" ");
 
         List<String> finalLore = new ArrayList<>();
         effects.forEach((effect, level) -> {
-            finalLore.add(effect.getName() + " " + level);
+            finalLore.add(ChatColor.AQUA + "• " + WordUtils.capitalize(effect.getName().toLowerCase()) + " " + level);
         });
         lore.addAll(finalLore);
 
@@ -85,6 +88,7 @@ public abstract class Crystal {
         meta.setLore(this.generateDefaultLore());
         meta.getPersistentDataContainer().set(new NamespacedKey(KoalaKraftCrystals.instance, "uuid")
                 , PersistentDataType.STRING, UUID.randomUUID().toString());
+        meta.setDisplayName(this.getName());
 
         item.setItemMeta(meta);
         return item;

@@ -1,5 +1,5 @@
 # KoalaKraftCrystals
-### A custom plugin that adds custom crystals to the KoalaKraft SMP!
+### A custom plugin that adds crystals to the KoalaKraft SMP!
 <br>
 KoalaKraftCrystals (KKC), creates custom crystals which give players certain effects based on the biome they're in.
 These crystals are represented by player heads in game. Any player who was a crystal anywhere in their inventory will recieve the appropriate

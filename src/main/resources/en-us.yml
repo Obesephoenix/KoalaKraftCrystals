@@ -2,6 +2,7 @@ prefix: "&a[&6KKC&a]"
 error:
   no-player: "&4Could not find a player named &c[0]&4!"
   invalid-int: "&4Could not parse integer &c[0]&4!"
+  invalid-args: "&4Those are the wrong arguments for this command!"
 default-command: "KoalaKraftCrystals Version [0]"
 givecrystal-command:
   error:

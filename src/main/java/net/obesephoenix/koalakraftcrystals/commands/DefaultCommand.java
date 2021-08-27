@@ -4,6 +4,9 @@ import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals;
 import net.obesephoenix.koalakraftcrystals.util.KKMessage;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DefaultCommand extends KKCommand {
 
     public DefaultCommand() {
@@ -15,6 +18,11 @@ public class DefaultCommand extends KKCommand {
         sender.sendMessage(KKMessage.format("default-command", new Object[]{KoalaKraftCrystals.instance
                 .getDescription().getVersion()}));
         return true;
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String... args) {
+        return new ArrayList<String>();
     }
 
 }

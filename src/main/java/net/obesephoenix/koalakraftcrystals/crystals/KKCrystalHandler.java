@@ -1,19 +1,23 @@
 package net.obesephoenix.koalakraftcrystals.crystals;
 
+import org.bukkit.Bukkit;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrystalHandler {
+public class KKCrystalHandler {
 
-    private static final List<Crystal> crystals = new ArrayList<Crystal>();
+    private static final List<Crystal> crystals = new ArrayList<>();
 
     public static void registerCrystals() {
-
+        registerCrystal(new TopazCrystal());
     }
 
     private static void registerCrystal(Crystal crystal) {
         crystals.add(crystal);
     }
+
+    public static List<Crystal> getCrystals() {return crystals;}
 
     public static Crystal getCrystal(String name) {
         for(Crystal crystal : crystals) {

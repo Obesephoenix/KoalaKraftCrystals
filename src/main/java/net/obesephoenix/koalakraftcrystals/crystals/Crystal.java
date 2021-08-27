@@ -49,7 +49,7 @@ public abstract class Crystal {
         lore.add("Holding this gem grants the bearer");
         lore.add("the power of - ");
 
-        List<String> finalLore = lore;
+        List<String> finalLore = new ArrayList<>();
         effects.forEach((effect, level) -> {
             finalLore.add(effect.getName() + " " + level);
         });

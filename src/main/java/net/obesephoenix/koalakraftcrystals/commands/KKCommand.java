@@ -1,6 +1,8 @@
 package net.obesephoenix.koalakraftcrystals.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,5 +25,6 @@ public abstract class KKCommand {
     public String getUsage() {return usage;}
 
     public abstract boolean execute(CommandSender sender, String... args);
+    public abstract List<String> tabComplete(CommandSender sender, String... args);
 
 }

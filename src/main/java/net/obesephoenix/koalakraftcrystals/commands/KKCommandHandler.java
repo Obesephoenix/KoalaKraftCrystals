@@ -1,5 +1,6 @@
 package net.obesephoenix.koalakraftcrystals.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,11 +16,14 @@ public class KKCommandHandler implements CommandExecutor {
 
     public static void registerCommands() {
         registerCommand(new DefaultCommand());
+        registerCommand(new GiveCrystalCommand());
     }
 
     public static void registerCommand(KKCommand command) {
         commands.add(command);
     }
+
+    public static List<KKCommand> getCommands() {return commands;}
 
     public static KKCommand getCommandByID(String id) {
         for (KKCommand command : commands) {
@@ -43,9 +47,11 @@ public class KKCommandHandler implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if (!label.equals("kkc")) return false;
 
-        for (KKCommand c : commands) {
-            if (label.equalsIgnoreCase(c.getName())) {
-                return c.execute(commandSender, args);
+        if (args.length != 0) {
+            for (KKCommand c : commands) {
+                if (args[0].equalsIgnoreCase(c.getName())) {
+                    return c.execute(commandSender, args);
+                }
             }
         }
 

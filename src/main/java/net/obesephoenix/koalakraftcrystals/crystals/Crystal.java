@@ -44,7 +44,7 @@ public abstract class Crystal {
     }
 
     private List<String> generateDefaultLore() {
-        List<String> lore = new ArrayList<String>();
+        List<String> lore = new ArrayList<>();
         lore = this.addLorePrefix(lore);
 
         lore.add(" ");
@@ -53,9 +53,8 @@ public abstract class Crystal {
         lore.add(" ");
 
         List<String> finalLore = new ArrayList<>();
-        effects.forEach((effect, level) -> {
-            finalLore.add(ChatColor.AQUA + "• " + WordUtils.capitalize(effect.getName().toLowerCase()) + " " + level);
-        });
+        effects.forEach((effect, level) -> finalLore.add(ChatColor.AQUA + "• " +
+                WordUtils.capitalize(effect.getName().toLowerCase()) + " " + level));
         lore.addAll(finalLore);
 
         lore.add(" ");
@@ -74,15 +73,19 @@ public abstract class Crystal {
 
         Field profileField = null;
         try {
+            assert meta != null;
             profileField = meta.getClass().getDeclaredField("profile");
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
-        profileField.setAccessible(true);
-        try {
-            profileField.set(meta, profile);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+
+        if (profileField != null) {
+            profileField.setAccessible(true);
+            try {
+                profileField.set(meta, profile);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
 
         meta.setLore(this.generateDefaultLore());

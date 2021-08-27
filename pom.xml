@@ -26,7 +26,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <outputDirectory>D:\Coding Work\Java\Minecraft Plugins\Servers\Server - 1.17.1\plugins</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -41,6 +40,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <outputFile>D:\Coding Work\Java\Minecraft Plugins\Servers\Server - 1.17.1\plugins\KoalaKraftCrystals.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

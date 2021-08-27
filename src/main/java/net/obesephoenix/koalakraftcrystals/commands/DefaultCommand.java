@@ -14,7 +14,7 @@ public class DefaultCommand extends KKCommand {
     public boolean execute(CommandSender sender, String... args) {
         sender.sendMessage(KKMessage.format("default-command", new Object[]{KoalaKraftCrystals.instance
                 .getDescription().getVersion()}));
-        return false;
+        return true;
     }
 
 }

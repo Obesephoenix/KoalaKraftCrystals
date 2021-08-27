@@ -49,7 +49,7 @@ public class KKCommandHandler implements CommandExecutor {
             }
         }
 
-        return false;
+        return getCommand("default").execute(commandSender, args);
     }
 
 }

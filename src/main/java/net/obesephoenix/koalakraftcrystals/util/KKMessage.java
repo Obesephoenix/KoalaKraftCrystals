@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 public class KKMessage {
 
     private static FileConfiguration messageFile = YamlConfiguration.loadConfiguration(new InputStreamReader(
-            KKMessage.class.getResourceAsStream("en-us.yml")));
+            KKMessage.class.getResourceAsStream("/en-us.yml")));
 
     public static String format(String key, Object[] args) {return format(key, args, true);}
     public static String format(String key) {return format(key, new Object[0], true);}
@@ -20,7 +20,7 @@ public class KKMessage {
         if (message == null) return "null";
 
         for (int c=0;c<args.length;c++) {
-            message.replace('[' + String.valueOf(c) + ']', String.valueOf(args[c]));
+            message = message.replace('[' + String.valueOf(c) + ']', String.valueOf(args[c]));
         }
 
         return ChatColor.translateAlternateColorCodes('&', message);

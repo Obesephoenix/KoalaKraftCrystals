@@ -1,2 +1,8 @@
-prefix: "[KKC]"
+prefix: "&a[&6KKC&a]"
+error:
+  no-player: "&4Could not find a player named &c[0]&4!"
+  invalid-int: "&4Could not parse integer &c[0]&4!"
 default-command: "KoalaKraftCrystals Version [0]"
+givecrystal-command:
+  error:
+    no-crystal: "&4Could not find a crystal called &c[0]&4!"

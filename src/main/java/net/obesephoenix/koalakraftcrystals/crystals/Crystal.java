@@ -8,11 +8,16 @@ import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.libs.org.codehaus.plexus.util.Base64;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
+
+import javax.naming.Name;
 
 public abstract class Crystal {
 
@@ -78,6 +83,9 @@ public abstract class Crystal {
         }
 
         meta.setLore(this.generateDefaultLore());
+        meta.getPersistentDataContainer().set(new NamespacedKey(KoalaKraftCrystals.instance, "uuid")
+                , PersistentDataType.STRING, UUID.randomUUID().toString());
+
         item.setItemMeta(meta);
         return item;
     }

@@ -3,7 +3,7 @@ package net.obesephoenix.koalakraftcrystals.commands;
 import net.obesephoenix.koalakraftcrystals.crystals.Crystal;
 import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler;
 import net.obesephoenix.koalakraftcrystals.util.KKMessage;
-import net.obesephoenix.koalakraftcrystals.util.KKTabCompletion;
+import net.obesephoenix.koalakraftcrystals.util.KKTabCompletionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -64,10 +64,10 @@ public class GiveCrystalCommand extends KKCommand {
 
         switch (args.length) {
             case 2:
-                StringUtil.copyPartialMatches(args[1], KKTabCompletion.getOnlinePlayers(), options);
+                StringUtil.copyPartialMatches(args[1], KKTabCompletionUtil.getOnlinePlayers(), options);
                 break;
             case 3:
-                StringUtil.copyPartialMatches(args[2], KKTabCompletion.getCrystals(), options);
+                StringUtil.copyPartialMatches(args[2], KKTabCompletionUtil.getCrystalIDs(), options);
                 break;
         }
 

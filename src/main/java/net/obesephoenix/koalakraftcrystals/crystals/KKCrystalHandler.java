@@ -11,6 +11,7 @@ public class KKCrystalHandler {
 
     public static void registerCrystals() {
         registerCrystal(new TopazCrystal());
+        registerCrystal(new SapphireCrystal());
     }
 
     private static void registerCrystal(Crystal crystal) {

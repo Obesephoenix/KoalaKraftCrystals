@@ -48,13 +48,14 @@ public abstract class Crystal {
     protected List<String> addLoreSuffix(List<String> lore) {
         return lore;
     }
+    protected String getBiomeName(Biome biome) {return biome.toString(); }
 
     protected List<String> generateDefaultLore() {
         List<String> lore = new ArrayList<>();
         lore = this.addLorePrefix(lore);
 
         lore.add(" ");
-        lore.add(ChatColor.GRAY + "Holding this gem in the " + this.getSecondaryColor() + this.getBiome().toString().toLowerCase());
+        lore.add(ChatColor.GRAY + "Holding this gem in the " + this.getSecondaryColor() + this.getBiomeName(getBiome()).toLowerCase());
         lore.add(ChatColor.GRAY + "grants the bearer the power of - ");
         lore.add(" ");
 

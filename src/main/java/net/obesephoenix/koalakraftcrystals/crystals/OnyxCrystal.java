@@ -14,7 +14,7 @@ public class OnyxCrystal extends Crystal {
     public OnyxCrystal() {
         super("onyx",
                 "onyx_crystal",
-                "http://textures.minecraft.net/texture/a79f8c92776d642d119f9e92360b1e5b971e66e61428a3e1b311d8b6185e6",
+                "http://textures.minecraft.net/texture/188bce497cfa5f611839f6da21c95d34e3e723c2cc4c3c319b562773d1216",
                 "end",
                 Arrays.asList("Slow Falling", "Invisibility"),
                 ChatColor.DARK_PURPLE,

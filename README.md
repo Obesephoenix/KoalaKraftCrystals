@@ -13,3 +13,5 @@ effect depending on what biome they're in.
   <li>Emerald (Green) - Grants Haste 2 & Jump Boost 2 in the jungle.</li>
   <li>Ruby (Red) - Grants Fire Resistance & Resistance 2 in the nether.</li>
 </ul>
+
+#### All crystals also grant Strength 2.

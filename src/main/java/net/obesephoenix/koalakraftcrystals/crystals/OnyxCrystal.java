@@ -24,7 +24,7 @@ public class OnyxCrystal extends Crystal {
     }
 
     @Override
-    public void grantEffects(Player player) {
+    public boolean grantEffects(Player player) {
         List<Biome> biomes = Arrays.asList(Biome.END_BARRENS, Biome.THE_END, Biome.THE_VOID, Biome.END_HIGHLANDS,
                 Biome.END_MIDLANDS, Biome.SMALL_END_ISLANDS);
         if (biomes.contains(player.getLocation().getBlock().getBiome())) {
@@ -32,7 +32,9 @@ public class OnyxCrystal extends Crystal {
                     false, false, true));
             player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 340, 0,
                     false, false, true));
+            return true;
         }
+        return false;
     }
 
     @Override

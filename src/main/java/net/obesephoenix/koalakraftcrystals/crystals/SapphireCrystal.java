@@ -24,7 +24,7 @@ public class SapphireCrystal extends Crystal {
     }
 
     @Override
-    public void grantEffects(Player player) {
+    public boolean grantEffects(Player player) {
         List<Biome> biomes = Arrays.asList(Biome.OCEAN, Biome.COLD_OCEAN, Biome.DEEP_COLD_OCEAN, Biome.DEEP_FROZEN_OCEAN,
                 Biome.DEEP_LUKEWARM_OCEAN, Biome.DEEP_OCEAN, Biome.WARM_OCEAN, Biome.LUKEWARM_OCEAN, Biome.DEEP_WARM_OCEAN,
                 Biome.WARM_OCEAN, Biome.FROZEN_OCEAN);
@@ -33,7 +33,9 @@ public class SapphireCrystal extends Crystal {
                     false , false, true));
             player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 340, 0,
                     false, false, true));
+            return true;
         }
+        return false;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class EmeraldCrystal extends Crystal {
     }
 
     @Override
-    public void grantEffects(Player player) {
+    public boolean grantEffects(Player player) {
         List<Biome> biomes = Arrays.asList(Biome.JUNGLE, Biome.JUNGLE_EDGE, Biome.JUNGLE_HILLS, Biome.BAMBOO_JUNGLE_HILLS,
                 Biome.BAMBOO_JUNGLE, Biome.BAMBOO_JUNGLE_HILLS, Biome.MODIFIED_JUNGLE, Biome.MODIFIED_JUNGLE_EDGE);
         if (biomes.contains(player.getLocation().getBlock().getBiome())) {
@@ -34,7 +34,9 @@ public class EmeraldCrystal extends Crystal {
                     false, false, true));
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 340, 1,
                     false, false, true));
+            return true;
         }
+        return false;
     }
 
     @Override

@@ -41,9 +41,10 @@ public class KKCrystalHandler {
                             Crystal crystal = KKCrystalHandler.getCrystalByID(id);
 
                             assert crystal != null;
-                            crystal.grantEffects(player);
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 340, 1,
-                                    false, false, true));
+                            if (crystal.grantEffects(player)) {
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 340, 1,
+                                        false, false, true));
+                            }
                         }
                     });
                 }

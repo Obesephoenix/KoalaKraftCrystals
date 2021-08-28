@@ -22,7 +22,7 @@ public class RubyCrystal extends Crystal {
     }
 
     @Override
-    public void grantEffects(Player player) {
+    public boolean grantEffects(Player player) {
         List<Biome> biomes = Arrays.asList(Biome.NETHER_WASTES, Biome.CRIMSON_FOREST, Biome.WARPED_FOREST, Biome.SOUL_SAND_VALLEY,
                 Biome.BASALT_DELTAS);
         if (biomes.contains(player.getLocation().getBlock().getBiome())) {
@@ -30,7 +30,9 @@ public class RubyCrystal extends Crystal {
                     false, false, true));
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 340, 1,
                     false, false, true));
+            return true;
         }
+        return false;
     }
 
     @Override

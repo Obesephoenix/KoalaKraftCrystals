@@ -48,7 +48,7 @@ public abstract class Crystal {
         this.effects.add("Strength 2");
     }
 
-    public abstract void grantEffects(Player player);
+    public abstract boolean grantEffects(Player player);
 
     protected List<String> addLorePrefix(List<String> lore) { return lore; }
     protected List<String> addLoreSuffix(List<String> lore) {

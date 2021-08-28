@@ -22,14 +22,16 @@ public class TopazCrystal extends  Crystal {
     }
 
     @Override
-    public void grantEffects(Player player) {
+    public boolean grantEffects(Player player) {
         List<Biome> biomes = Arrays.asList(Biome.DESERT, Biome.DESERT_HILLS, Biome.DESERT_LAKES);
         if (biomes.contains(player.getLocation().getBlock().getBiome())) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 340, 1,
                     false, false, true));
             player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 340, 2,
                     false, false, true));
+            return true;
         }
+        return false;
     }
 
     @Override

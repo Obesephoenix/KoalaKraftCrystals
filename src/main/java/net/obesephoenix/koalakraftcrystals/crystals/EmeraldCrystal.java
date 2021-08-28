@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
@@ -26,7 +27,14 @@ public class EmeraldCrystal extends Crystal {
 
     @Override
     public void grantEffects(Player player) {
-
+        List<Biome> biomes = Arrays.asList(Biome.JUNGLE, Biome.JUNGLE_EDGE, Biome.JUNGLE_HILLS, Biome.BAMBOO_JUNGLE_HILLS,
+                Biome.BAMBOO_JUNGLE, Biome.BAMBOO_JUNGLE_HILLS, Biome.MODIFIED_JUNGLE, Biome.MODIFIED_JUNGLE_EDGE);
+        if (biomes.contains(player.getLocation().getBlock().getBiome())) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 340, 1,
+                    false, false, true));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 340, 1,
+                    false, false, true));
+        }
     }
 
     @Override

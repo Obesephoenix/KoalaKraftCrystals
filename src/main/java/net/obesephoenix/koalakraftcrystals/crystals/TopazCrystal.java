@@ -2,7 +2,10 @@ package net.obesephoenix.koalakraftcrystals.crystals;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -20,7 +23,13 @@ public class TopazCrystal extends  Crystal {
 
     @Override
     public void grantEffects(Player player) {
-        Bukkit.broadcastMessage("effect granted");
+        List<Biome> biomes = Arrays.asList(Biome.DESERT, Biome.DESERT_HILLS, Biome.DESERT_LAKES);
+        if (biomes.contains(player.getLocation().getBlock().getBiome())) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 340, 1,
+                    false, false, true));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 340, 2,
+                    false, false, true));
+        }
     }
 
     @Override

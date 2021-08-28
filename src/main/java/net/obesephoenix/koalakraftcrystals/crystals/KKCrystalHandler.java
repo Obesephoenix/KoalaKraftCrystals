@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -40,11 +42,13 @@ public class KKCrystalHandler {
 
                             assert crystal != null;
                             crystal.grantEffects(player);
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 340, 1,
+                                    false, false, true));
                         }
                     });
                 }
             }
-        }.runTaskTimer(KoalaKraftCrystals.instance, 0L, 100L);
+        }.runTaskTimer(KoalaKraftCrystals.instance, 0L, 120L);
     }
 
     private static void registerCrystal(Crystal crystal) {

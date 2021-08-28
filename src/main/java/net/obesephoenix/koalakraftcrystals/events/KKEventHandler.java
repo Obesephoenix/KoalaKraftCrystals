@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class KKEventHandler {
 
     public static void registerEvents(JavaPlugin plugin) {
-
+        registerEvent(new onEntityDamage(), plugin);
     }
 
     private static void registerEvent(Listener listener, JavaPlugin plugin) {

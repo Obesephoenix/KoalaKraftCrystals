@@ -28,6 +28,7 @@ public class KKCrystalHandler {
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.getInventory().forEach(item -> {
+                        if (item == null) return;
                         ItemMeta meta = item.getItemMeta();
                         if(meta == null) return;
 

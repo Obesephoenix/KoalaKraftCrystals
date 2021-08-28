@@ -17,6 +17,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.libs.org.codehaus.plexus.util.Base64;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -105,6 +106,7 @@ public abstract class Crystal {
         meta.getPersistentDataContainer().set(new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id")
                 , PersistentDataType.STRING, this.getID());
         meta.setDisplayName(this.getPrimaryColor().toString() + ChatColor.BOLD + WordUtils.capitalize(this.getName()));
+        meta.setUnbreakable(true);
 
         item.setItemMeta(meta);
         return item;

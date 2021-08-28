@@ -1,6 +1,13 @@
 package net.obesephoenix.koalakraftcrystals.crystals;
 
+import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +22,34 @@ public class KKCrystalHandler {
         registerCrystal(new OnyxCrystal());
         registerCrystal(new EmeraldCrystal());
         registerCrystal(new RubyCrystal());
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.getInventory().forEach(item -> {
+                        ItemMeta meta = item.getItemMeta();
+                        if(meta == null) return;
+
+                        if(meta.getPersistentDataContainer().has(new NamespacedKey(KoalaKraftCrystals.instance,
+                                "crystal_id"), PersistentDataType.STRING)) {
+                            String id = meta.getPersistentDataContainer().get(new NamespacedKey(KoalaKraftCrystals.instance,
+                                    "crystal_id"), PersistentDataType.STRING);
+                            Crystal crystal = KKCrystalHandler.getCrystalByID(id);
+
+                            assert crystal != null;
+                            crystal.grantEffects(player);
+                        }
+                    });
+                }
+            }
+        }.runTaskTimer(KoalaKraftCrystals.instance, 0L, 100L);
     }
 
     private static void registerCrystal(Crystal crystal) {
         crystals.add(crystal);
     }
+
 
     public static List<Crystal> getCrystals() {return crystals;}
 

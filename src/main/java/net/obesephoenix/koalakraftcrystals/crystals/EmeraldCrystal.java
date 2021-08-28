@@ -2,6 +2,7 @@ package net.obesephoenix.koalakraftcrystals.crystals;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
 
@@ -15,12 +16,17 @@ public class EmeraldCrystal extends Crystal {
     public EmeraldCrystal() {
         super("emerald",
                 "emerald_crystal",
-                "http://textures.minecraft.net/texture/e6e0d5fe87d2d21e2bde6374425a341a7573b375d5bb7d47f4b8dae35297ea4",
+                "http://textures.minecraft.net/texture/8926c1f2c3c14d086c40cfc235fe938694f4a51067ada4726b486ea1c87b03e2",
                 "jungle",
                 Arrays.asList("Haste 2", "Jump Boost 2"),
                 ChatColor.GREEN,
                 ChatColor.DARK_GREEN
                 );
+    }
+
+    @Override
+    public void grantEffects(Player player) {
+
     }
 
     @Override

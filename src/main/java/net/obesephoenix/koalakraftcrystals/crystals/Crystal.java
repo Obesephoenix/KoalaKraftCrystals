@@ -47,6 +47,8 @@ public abstract class Crystal {
         this.effects.add("Strength 2");
     }
 
+    public abstract void grantEffects(Player player);
+
     protected List<String> addLorePrefix(List<String> lore) { return lore; }
     protected List<String> addLoreSuffix(List<String> lore) {
         return lore;
@@ -100,6 +102,8 @@ public abstract class Crystal {
         meta.setLore(this.generateDefaultLore());
         meta.getPersistentDataContainer().set(new NamespacedKey(KoalaKraftCrystals.instance, "uuid")
                 , PersistentDataType.STRING, UUID.randomUUID().toString());
+        meta.getPersistentDataContainer().set(new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id")
+                , PersistentDataType.STRING, this.getID());
         meta.setDisplayName(this.getPrimaryColor().toString() + ChatColor.BOLD + WordUtils.capitalize(this.getName()));
 
         item.setItemMeta(meta);

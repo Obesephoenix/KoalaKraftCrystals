@@ -1,6 +1,7 @@
 package net.obesephoenix.koalakraftcrystals.crystals;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,11 +11,16 @@ public class RubyCrystal extends Crystal {
     public RubyCrystal() {
         super("ruby",
                 "ruby_crystal",
-                "http://textures.minecraft.net/texture/f83236639607036c1ba391c2b46a9c7b0efd760c8bfa2996a6055582b4da5",
+                "http://textures.minecraft.net/texture/c20ef06dd60499766ac8ce15d2bea41d2813fe55718864b52dc41cbaae1ea913",
                 "nether",
                 Arrays.asList("Fire Resistance", "Resistance 2"),
                 ChatColor.RED,
                 ChatColor.DARK_RED);
+    }
+
+    @Override
+    public void grantEffects(Player player) {
+
     }
 
     @Override

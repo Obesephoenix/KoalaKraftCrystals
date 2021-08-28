@@ -1,5 +1,6 @@
 package net.obesephoenix.koalakraftcrystals.commands;
 
+import net.obesephoenix.koalakraftcrystals.util.KKMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,6 +18,7 @@ public class KKCommandHandler implements CommandExecutor {
     public static void registerCommands() {
         registerCommand(new DefaultCommand());
         registerCommand(new GiveCrystalCommand());
+        registerCommand(new CrystalInfoCommand());
     }
 
     public static void registerCommand(KKCommand command) {
@@ -50,7 +52,12 @@ public class KKCommandHandler implements CommandExecutor {
         if (args.length != 0) {
             for (KKCommand c : commands) {
                 if (args[0].equalsIgnoreCase(c.getName())) {
-                    return c.execute(commandSender, args);
+                    if (commandSender.hasPermission(c.getPermission())) {
+                        return c.execute(commandSender, args);
+                    } else {
+                        commandSender.sendMessage(KKMessage.format("error.no-permission"));
+                        return true;
+                    }
                 }
             }
         }

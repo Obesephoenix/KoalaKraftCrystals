@@ -3,7 +3,15 @@ error:
   no-player: "&4Could not find a player named &c[0]&4!"
   invalid-int: "&4Could not parse integer &c[0]&4!"
   invalid-args: "&4Those are the wrong arguments for this command!"
+  no-permission: "&4You do not have the required permission to use this command!"
 default-command: "KoalaKraftCrystals Version [0]"
 givecrystal-command:
+  success:
+    single: "&aSuccessfully gave &6[0] x[1] &ato &6[2]&a!"
+    all: "&aSuccessfully gave all crystals to &6[0]&a!"
   error:
     no-crystal: "&4Could not find a crystal called &c[0]&4!"
+crystalinfo-command:
+  success:
+    found: "&6[0]&a currently possesses -"
+    none: "&6[0]&a currently possesses no crystals!"

@@ -27,7 +27,6 @@ public class onEntityDamage implements Listener {
         if (meta.getPersistentDataContainer().has(new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id")
                 , PersistentDataType.STRING)) {
             event.setCancelled(true);
-            entity.setVelocity(new Vector(0, 0.5, 0));
         }
     }
 }

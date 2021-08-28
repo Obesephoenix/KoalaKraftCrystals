@@ -77,4 +77,22 @@ public class KKCrystalHandler {
         return null;
     }
 
+    public static List<Crystal> getCrystalsFromPlayer(Player player) {
+        List<Crystal> playerCrystals = new ArrayList<>();
+
+        player.getInventory().forEach(item -> {
+            if (item == null) return;
+            ItemMeta meta = item.getItemMeta();
+            if (meta == null) return;
+
+            if (meta.getPersistentDataContainer().has(new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id"),
+                    PersistentDataType.STRING)) {
+                playerCrystals.add(KKCrystalHandler.getCrystalByID(meta.getPersistentDataContainer().get(new NamespacedKey(KoalaKraftCrystals.instance,
+                        "crystal_id"), PersistentDataType.STRING)));
+            }
+        });
+
+        return playerCrystals;
+    }
+
 }

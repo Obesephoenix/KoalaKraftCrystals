@@ -13,16 +13,19 @@ public abstract class KKCommand {
     private final String name;
     private final String id;
     private final String usage;
+    private final String permission;
     
-    public KKCommand(String name, String id, String usage) {
+    public KKCommand(String name, String id, String usage, String permission) {
         this.name = name;
         this.id = id;
         this.usage = usage;
+        this.permission = permission;
     }
 
     public String getName() {return name;}
     public String getID() {return id;}
     public String getUsage() {return usage;}
+    public String getPermission() {return permission;}
 
     public abstract boolean execute(CommandSender sender, String... args);
     public abstract List<String> tabComplete(CommandSender sender, String... args);

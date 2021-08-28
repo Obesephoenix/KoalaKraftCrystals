@@ -10,7 +10,8 @@ import java.util.List;
 public class DefaultCommand extends KKCommand {
 
     public DefaultCommand() {
-        super("default", "default_command", "/kkc");
+        super("default", "default_command", "/kkc",
+                "koalakraftcrystals.default");
     }
 
     @Override

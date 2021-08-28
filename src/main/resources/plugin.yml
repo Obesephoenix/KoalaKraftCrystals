@@ -8,3 +8,17 @@ commands:
   kkc:
     description: The central KoalaKraftCrystals command!
     usage: /kkc <args>
+permissions:
+  koalakraftcrystals.*:
+    description: Gives permission to all KKC commands!
+    children:
+      koalakraftcrystals.givecrystal: true
+      koalakraftcyrstals.crystalinfo: true
+  koalakraftcrystals.givecrystal:
+    description: Gives permission to use /kkc givecrystal!
+    default: op
+  koalakraftcrystals.crystalinfo:
+    description: Gives permission to use /kkc crystalinfo!
+    default: op
+  koalakraftcrystals.default:
+    default: true

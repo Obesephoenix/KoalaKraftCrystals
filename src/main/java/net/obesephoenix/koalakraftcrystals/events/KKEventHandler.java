@@ -8,6 +8,7 @@ public class KKEventHandler {
 
     public static void registerEvents(JavaPlugin plugin) {
         registerEvent(new onEntityDamage(), plugin);
+        registerEvent(new onItemDespawn(), plugin);
     }
 
     private static void registerEvent(Listener listener, JavaPlugin plugin) {

@@ -29,30 +29,50 @@ public class CrystalInfoCommand extends KKCommand {
         }
 
         Player player = Bukkit.getPlayer(args[1]);
-        if (player == null) {
-            sender.sendMessage(KKMessage.format("error.no-player", new Object[]{args[1]}, false));
+        Crystal crystal = KKCrystalHandler.getCrystalByID(args[1]);
+        boolean usePlayer;
+        if (crystal == null) {
+            if (player != null) {
+                usePlayer = true;
+            } else {
+                sender.sendMessage(KKMessage.format("error.no-crystal", new Object[]{args[1]}, false));
+                return true;
+            }
+        } else {
+            usePlayer = false;
+        }
+
+        if (usePlayer) {
+            List<Crystal> crystals = KKCrystalHandler.getCrystalsFromPlayer(player);
+
+            if (crystals.size() != 0) {
+                sender.sendMessage(KKMessage.format("crystalinfo-command.success.player.found", new Object[]{player.getDisplayName()}));
+                crystals.forEach(c -> player.sendMessage(ChatColor.GREEN + " - " + WordUtils.capitalize(c.getName())));
+            } else {
+                sender.sendMessage(KKMessage.format("crystalinfo-command.success.player.none", new Object[]{player.getDisplayName()}));
+            }
+            return true;
+        } else {
+            List<Player> targets = KKCrystalHandler.getPlayerFromCrystal(crystal);
+
+            if (targets.size() == 0) {
+                sender.sendMessage(KKMessage.format("crystalinfo-command.success.crystal.none", new Object[]{crystal.getID()}));
+            } else {
+                sender.sendMessage(KKMessage.format("crystalinfo-command.success.crystal.found", new Object[]{crystal.getID()}));
+                targets.forEach(target -> sender.sendMessage(ChatColor.GREEN + " - " + target.getDisplayName()));
+            }
             return true;
         }
-
-        List<Crystal> found = KKCrystalHandler.getCrystalsFromPlayer(player);
-        if (found.size() == 0) {
-            sender.sendMessage(KKMessage.format("crystalinfo-command.success.none", new Object[]{player.getDisplayName()}));
-        } else {
-            sender.sendMessage(KKMessage.format("crystalinfo-command.success.found", new Object[]{player.getDisplayName()}));
-            found.forEach(c -> {
-                sender.sendMessage(ChatColor.GREEN + "- " + WordUtils.capitalize(c.getName()));
-            });
-        }
-
-        return true;
     }
+
+        
 
     @Override
     public List<String> tabComplete(CommandSender sender, String... args) {
         List<String> options = new ArrayList<>();
 
         if (args.length == 2) {
-            StringUtil.copyPartialMatches(args[1], KKTabCompletionUtil.getOnlinePlayers(), options);
+            StringUtil.copyPartialMatches(args[1], KKTabCompletionUtil.getCrystalIDs(), options);
         }
 
         return options;

@@ -11,12 +11,15 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.naming.Name;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class KKCrystalHandler {
 
     private static final List<Crystal> crystals = new ArrayList<>();
+    private static final NamespacedKey crystalID_key = new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id");
 
     public static void registerCrystals() {
         registerCrystal(new TopazCrystal());
@@ -34,10 +37,8 @@ public class KKCrystalHandler {
                         ItemMeta meta = item.getItemMeta();
                         if(meta == null) return;
 
-                        if(meta.getPersistentDataContainer().has(new NamespacedKey(KoalaKraftCrystals.instance,
-                                "crystal_id"), PersistentDataType.STRING)) {
-                            String id = meta.getPersistentDataContainer().get(new NamespacedKey(KoalaKraftCrystals.instance,
-                                    "crystal_id"), PersistentDataType.STRING);
+                        if(meta.getPersistentDataContainer().has(KKCrystalHandler.crystalID_key, PersistentDataType.STRING)) {
+                            String id = meta.getPersistentDataContainer().get(KKCrystalHandler.crystalID_key, PersistentDataType.STRING);
                             Crystal crystal = KKCrystalHandler.getCrystalByID(id);
 
                             assert crystal != null;
@@ -85,14 +86,34 @@ public class KKCrystalHandler {
             ItemMeta meta = item.getItemMeta();
             if (meta == null) return;
 
-            if (meta.getPersistentDataContainer().has(new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id"),
-                    PersistentDataType.STRING)) {
-                playerCrystals.add(KKCrystalHandler.getCrystalByID(meta.getPersistentDataContainer().get(new NamespacedKey(KoalaKraftCrystals.instance,
-                        "crystal_id"), PersistentDataType.STRING)));
+            if (meta.getPersistentDataContainer().has(KKCrystalHandler.crystalID_key, PersistentDataType.STRING)) {
+                Crystal crystal = KKCrystalHandler.getCrystalByID(meta.getPersistentDataContainer().get(KKCrystalHandler.crystalID_key,
+                        PersistentDataType.STRING));
+                playerCrystals.add(crystal);
             }
         });
 
         return playerCrystals;
+    }
+
+    public static List<Player> getPlayerFromCrystal(Crystal crystal) {
+        List<Player> players = new ArrayList<>();
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            for (ItemStack i : p.getInventory()) {
+                if (i == null) continue;
+                ItemMeta meta = i.getItemMeta();
+                if (meta == null) continue;
+
+                if (meta.getPersistentDataContainer().has(KKCrystalHandler.crystalID_key, PersistentDataType.STRING)) {
+                    if (Objects.equals(meta.getPersistentDataContainer().get(KKCrystalHandler.crystalID_key, PersistentDataType.STRING), crystal.getID())) {
+                        players.add(p);
+                    }
+                }
+            }
+        }
+
+        return players;
     }
 
 }

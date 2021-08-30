@@ -44,7 +44,7 @@ public class GiveCrystalCommand extends KKCommand {
 
         Crystal crystal = KKCrystalHandler.getCrystalByID(args[2]);
         if (crystal == null) {
-            sender.sendMessage(KKMessage.format("givecrystal-command.error.no-crystal", new Object[]{args[2]}, false));
+            sender.sendMessage(KKMessage.format("error.no-crystal", new Object[]{args[2]}, false));
             return true;
         }
 

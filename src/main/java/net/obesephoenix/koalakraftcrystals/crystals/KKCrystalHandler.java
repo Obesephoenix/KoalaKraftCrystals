@@ -1,6 +1,7 @@
 package net.obesephoenix.koalakraftcrystals.crystals;
 
 import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals;
+import net.obesephoenix.koalakraftcrystals.util.KKFileUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -22,6 +23,8 @@ public class KKCrystalHandler {
     private static final NamespacedKey crystalID_key = new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id");
 
     public static void registerCrystals() {
+        crystals.clear();
+
         registerCrystal(new TopazCrystal());
         registerCrystal(new SapphireCrystal());
         registerCrystal(new OnyxCrystal());
@@ -54,7 +57,9 @@ public class KKCrystalHandler {
     }
 
     private static void registerCrystal(Crystal crystal) {
-        crystals.add(crystal);
+        if (KKFileUtil.getConfigFile().get().getBoolean(crystal.getID() + ".enabled")) {
+            crystals.add(crystal);
+        }
     }
 
 

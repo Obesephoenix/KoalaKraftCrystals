@@ -18,3 +18,7 @@ crystalinfo-command:
     crystal:
       none: "&aNo player currently possesses &6[0]&a!"
       found: "&6[0]&a is currently possessed by - "
+disabledcrystal-command:
+  success:
+    - "&aSuccessfully disabled &6[0]&a!"
+    - "&aTo ensure the full changes take effect, please use &6/reload confirm&a!"

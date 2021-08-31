@@ -20,5 +20,8 @@ permissions:
   koalakraftcrystals.crystalinfo:
     description: Gives permission to use /kkc crystalinfo!
     default: op
+  koalakraftcrystals.disablecrystal:
+    description: Gives permission to use /kkc disablecrystal!
+    default: op
   koalakraftcrystals.default:
     default: true

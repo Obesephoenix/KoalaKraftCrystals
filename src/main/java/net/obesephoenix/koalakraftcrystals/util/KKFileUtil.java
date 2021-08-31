@@ -13,16 +13,21 @@ import java.util.Map;
 
 public class KKFileUtil {
 
+    private static CrystalConfigFile configFile = null;
+
     public static CrystalConfigFile getConfigFile() {
-        return new CrystalConfigFile();
+        if (configFile == null) {
+            configFile = new CrystalConfigFile();
+        }
+        return configFile;
     }
 
-    private static class CrystalConfigFile {
+    public static class CrystalConfigFile {
 
         File file;
         FileConfiguration config;
 
-        private CrystalConfigFile() {
+        public CrystalConfigFile() {
             file = new File(KoalaKraftCrystals.instance.getDataFolder(), "/crystals.yml");
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
@@ -45,7 +50,7 @@ public class KKFileUtil {
             this.saveConfig();
         }
 
-        private FileConfiguration saveConfig() {
+        public FileConfiguration saveConfig() {
             try {
                 config.save(file);
             } catch(IOException e) {
@@ -55,13 +60,13 @@ public class KKFileUtil {
             return config;
         }
 
-        private FileConfiguration reloadConfig() {
+        public FileConfiguration reloadConfig() {
             config = YamlConfiguration.loadConfiguration(file);
             return config;
         }
 
-        private Object get(String key) {
-            return config.get(key);
+        public FileConfiguration get() {
+            return config;
         }
 
     }

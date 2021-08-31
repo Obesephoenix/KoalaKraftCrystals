@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,9 +30,10 @@ public class KKMessage {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static List<String> formatMultiline(String key, Object[] args, boolean prefix) {
+    public static List<String> formatMultiline(String key) {return formatMultiline(key, new Object[0]);}
+    public static List<String> formatMultiline(String key, Object[] args) {
         List<String> messages = messageFile.getStringList(key);
-        if (prefix) messages.add(messageFile.getString("prefix"));
+        List<String> others = new ArrayList<>();
 
         messages.forEach(message -> {
             for (int c=0;c<args.length;c++) {
@@ -39,9 +41,10 @@ public class KKMessage {
             }
 
             message = ChatColor.translateAlternateColorCodes('&', message);
+            others.add(message);
         });
         
-        return messages;
+        return others;
     }
 
 }

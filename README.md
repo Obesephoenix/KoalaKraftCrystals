@@ -15,3 +15,10 @@ effect depending on what biome they're in.
 </ul>
 
 #### All crystals also grant Strength 2.
+
+KoalaKraft crystals also adds several useful utility commands to help an admin deal with the distribution of crystals in-game!
+
+<ol>
+  <li>DisableCrystal - Completley removes a crystal from the game, also wiping it from all player inventories!</li>
+  <li>CrystalInfo - Gives info on who possesses which crystals, and vice-versa!</li>
+</ol>

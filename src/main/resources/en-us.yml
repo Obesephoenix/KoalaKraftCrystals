@@ -1,8 +1,7 @@
 prefix: "&a[&6KKC&a]"
-godmode:
-  no-drop:
-    - "&aWarning! Dropping this item will remove your GodMode!"
-    - "&6Drop again to confirm!"
+no-drop:
+  - "&AAre you sure you want to drop this crystal!"
+  - "&6Drop again to confirm!"
 error:
   no-player: "&4Could not find a player named &c[0]&4!"
   invalid-int: "&4Could not parse integer &c[0]&4!"

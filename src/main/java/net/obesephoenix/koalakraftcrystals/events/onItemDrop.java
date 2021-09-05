@@ -27,10 +27,10 @@ public class onItemDrop implements Listener {
         Player p = e.getPlayer();
         ItemStack i = e.getItemDrop().getItemStack();
 
-        if (GodModeHandler.isGodMode(p) && KKCrystalHandler.isCrystal(i)) {
+        if (KKCrystalHandler.isCrystal(i)) {
             if (!toDrop.containsKey(i)) {
                 e.setCancelled(true);
-                List<String> messages = KKMessage.formatMultiline("godmode.no-drop");
+                List<String> messages = KKMessage.formatMultiline("no-drop");
                 messages.forEach(p::sendMessage);
                 toDrop.put(i, p);
 
@@ -39,10 +39,9 @@ public class onItemDrop implements Listener {
                     public void run() {
                         toDrop.remove(i, p);
                     }
-                }.runTaskLater(KoalaKraftCrystals.instance, 200);
+                }.runTaskLater(KoalaKraftCrystals.instance, 100L);
             } else {
                 toDrop.remove(i, p);
-                GodModeHandler.setGodMode(p, false);
             }
         }
     }

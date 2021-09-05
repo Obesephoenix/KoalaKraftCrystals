@@ -1,7 +1,14 @@
 package net.obesephoenix.koalakraftcrystals.crystals;
 
+import net.minecraft.network.protocol.game.PacketPlayOutWorldParticles;
+import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;

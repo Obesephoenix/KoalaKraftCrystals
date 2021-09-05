@@ -20,7 +20,7 @@ import java.util.Objects;
 public class KKCrystalHandler {
 
     private static final List<Crystal> crystals = new ArrayList<>();
-    private static final NamespacedKey crystalID_key = new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id");
+    public static final NamespacedKey crystalID_key = new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id");
 
     public static void registerCrystals() {
         crystals.clear();
@@ -57,13 +57,20 @@ public class KKCrystalHandler {
     }
 
     private static void registerCrystal(Crystal crystal) {
-        if (KKFileUtil.getConfigFile().get().getBoolean(crystal.getID() + ".enabled")) {
-            crystals.add(crystal);
-        }
+        crystals.add(crystal);
     }
 
 
-    public static List<Crystal> getCrystals() {return crystals;}
+    public static List<Crystal> getCrystals() {
+        List<Crystal> var1 = new ArrayList<>();
+        crystals.forEach(crystal -> {
+            if(!KKFileUtil.getConfigFile().get().getBoolean(crystal.getID() + ".enabled")) {
+                return;
+            }
+            var1.add(crystal);
+        });
+        return var1;
+    }
 
     public static Crystal getCrystal(String name) {
         for(Crystal crystal : crystals) {
@@ -72,6 +79,15 @@ public class KKCrystalHandler {
             }
         }
         return null;
+    }
+
+    /**
+     *
+     * Provides a list of all existing crystals, for most use cases use getCrystal()
+     * @return A list of all existing crystals
+     */
+    public static List<Crystal> getRawCrystals() {
+        return crystals;
     }
 
     public static Crystal getCrystalByID(String id) {

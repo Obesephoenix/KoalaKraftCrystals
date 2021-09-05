@@ -11,7 +11,7 @@ public class KKTabCompletionUtil {
 
     public static List<String> getOnlinePlayers() {
         List<String> players = new ArrayList<>();
-        Bukkit.getOnlinePlayers().forEach(p -> players.add(p.getDisplayName()));
+        Bukkit.getOnlinePlayers().forEach(p -> players.add(p.getName()));
         return players;
     }
 

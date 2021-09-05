@@ -41,7 +41,7 @@ public class KKFileUtil {
 
             config = YamlConfiguration.loadConfiguration(file);
 
-            for (Crystal crystal : KKCrystalHandler.getCrystals()) {
+            for (Crystal crystal : KKCrystalHandler.getRawCrystals()) {
                 config.addDefault(crystal.getID() + ".enabled",
                         true);
             }

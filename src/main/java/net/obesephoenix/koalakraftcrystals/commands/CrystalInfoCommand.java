@@ -47,7 +47,7 @@ public class CrystalInfoCommand extends KKCommand {
 
             if (crystals.size() != 0) {
                 sender.sendMessage(KKMessage.format("crystalinfo-command.success.player.found", new Object[]{player.getDisplayName()}));
-                crystals.forEach(c -> player.sendMessage(ChatColor.GREEN + " - " + WordUtils.capitalize(c.getName())));
+                crystals.forEach(c -> sender.sendMessage(ChatColor.GREEN + " - " + WordUtils.capitalize(c.getName())));
             } else {
                 sender.sendMessage(KKMessage.format("crystalinfo-command.success.player.none", new Object[]{player.getDisplayName()}));
             }

@@ -19,6 +19,7 @@ public class KKCommandHandler implements CommandExecutor {
         registerCommand(new DefaultCommand());
         registerCommand(new GiveCrystalCommand());
         registerCommand(new CrystalInfoCommand());
+        registerCommand(new DisableCrystalCommand());
     }
 
     public static void registerCommand(KKCommand command) {

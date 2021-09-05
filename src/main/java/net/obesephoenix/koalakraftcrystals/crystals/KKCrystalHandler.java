@@ -51,6 +51,14 @@ public class KKCrystalHandler {
                             }
                         }
                     });
+                    List<Crystal> playerCrystals = KKCrystalHandler.getCrystalsFromPlayer(player);
+                    if (playerCrystals.size() >= crystals.size()) {
+                        if (!GodModeHandler.isGodMode(player)) {
+                            GodModeHandler.setGodMode(player);
+                        }
+                    } else if (GodModeHandler.isGodMode(player)) {
+                        GodModeHandler.setGodMode(player, false);
+                    }
                 }
             }
         }.runTaskTimer(KoalaKraftCrystals.instance, 0L, 120L);
@@ -135,6 +143,13 @@ public class KKCrystalHandler {
         }
 
         return players;
+    }
+
+    public static boolean isCrystal(ItemStack i) {
+        ItemMeta meta = i.getItemMeta();
+        if (meta == null) return false;
+
+        return meta.getPersistentDataContainer().has(KKCrystalHandler.crystalID_key, PersistentDataType.STRING);
     }
 
 }

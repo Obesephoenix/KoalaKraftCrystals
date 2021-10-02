@@ -1,40 +1,40 @@
-package net.obesephoenix.koalakraftcrystals.util;
+package net.obesephoenix.koalakraftcrystals.util
 
-import net.obesephoenix.koalakraftcrystals.commands.KKCommandHandler;
-import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler;
-import org.bukkit.Bukkit;
+import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler.getCrystals
+import org.bukkit.Bukkit
+import org.bukkit.entity.Player
+import net.obesephoenix.koalakraftcrystals.crystals.Crystal
+import net.obesephoenix.koalakraftcrystals.commands.KKCommandHandler
+import java.util.ArrayList
+import java.util.function.Consumer
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class KKTabCompletionUtil {
-
-    public static List<String> getOnlinePlayers() {
-        List<String> players = new ArrayList<>();
-        Bukkit.getOnlinePlayers().forEach(p -> players.add(p.getName()));
-        return players;
-    }
-
-    public static List<String> getCrystals() {
-        List<String> crystals = new ArrayList<>();
-        KKCrystalHandler.getCrystals().forEach(p -> crystals.add(p.getName()));
-        return crystals;
-    }
-
-    public static List<String> getCrystalIDs() {
-        List<String> ids = new ArrayList<>();
-        KKCrystalHandler.getCrystals().forEach(p -> ids.add(p.getID()));
-        return ids;
-    }
-
-    public static List<String> getCommands() {
-        List<String> commands = new ArrayList<>();
-        KKCommandHandler.getCommands().forEach(p -> {
-            if (!p.getName().equalsIgnoreCase("default")) {
-                commands.add(p.getName());
+object KKTabCompletionUtil {
+    val onlinePlayers: List<String>
+        get() {
+            val players: MutableList<String> = ArrayList()
+            Bukkit.getOnlinePlayers().forEach { p: Player? -> players.add(p!!.name) }
+            return players
+        }
+    val crystals: List<String>
+        get() {
+            val crystals: MutableList<String> = ArrayList()
+            getCrystals().forEach(Consumer { p: Crystal -> crystals.add(p.name) })
+            return crystals
+        }
+    val crystalIDs: List<String>
+        get() {
+            val ids: MutableList<String> = ArrayList()
+            getCrystals().forEach(Consumer { p: Crystal -> ids.add(p.id) })
+            return ids
+        }
+    val commands: List<String>
+        get() {
+            val commands: MutableList<String> = ArrayList()
+            KKCommandHandler.getCommands().forEach { p ->
+                if (!p.name.equals("default", ignoreCase = true)) {
+                    commands.add(p.name)
+                }
             }
-        });
-        return commands;
-    }
-
+            return commands
+        }
 }

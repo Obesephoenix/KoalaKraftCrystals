@@ -1,47 +1,44 @@
-package net.obesephoenix.koalakraftcrystals.util;
+package net.obesephoenix.koalakraftcrystals.util
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.FileConfiguration
+import kotlin.jvm.JvmOverloads
+import org.bukkit.ChatColor
+import org.bukkit.configuration.file.YamlConfiguration
+import java.io.InputStreamReader
+import java.util.*
+import java.util.function.Consumer
 
-import java.io.InputStreamReader;
-import java.util.*;
+object KKMessage {
+    private val messageFile: FileConfiguration = YamlConfiguration.loadConfiguration(
+        InputStreamReader(
+            Objects.requireNonNull(KKMessage::class.java.getResourceAsStream("/en-us.yml"))
+        )
+    )
 
-public class KKMessage {
-
-    private static final FileConfiguration messageFile = YamlConfiguration.loadConfiguration(new InputStreamReader(
-            Objects.requireNonNull(KKMessage.class.getResourceAsStream("/en-us.yml"))));
-
-    public static String format(String key, Object[] args) {return format(key, args, true);}
-    public static String format(String key) {return format(key, new Object[0], true);}
-    public static String format(String key, Object[] args, boolean prefix) {
-        String message = prefix ?  messageFile.getString("prefix")  + " " + messageFile.getString(key)
-                : messageFile.getString(key);
-        if (message == null) return "null";
-
-        for (int c=0;c<args.length;c++) {
-            message = message.replace('[' + String.valueOf(c) + ']', String.valueOf(args[c]));
+    @JvmOverloads
+    fun format(key: String, args: Array<Any> = arrayOf(), prefix: Boolean = true): String {
+        var message = if (prefix) messageFile.getString("prefix") + " " + messageFile.getString(
+            key
+        ) else messageFile.getString(key)
+        if (message == null) return "null"
+        for (c in args.indices) {
+            message = message!!.replace("[$c]", args[c].toString())
         }
-
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return ChatColor.translateAlternateColorCodes('&', message!!)
     }
 
-    public static List<String> formatMultiline(String key) {return formatMultiline(key, new Object[0]);}
-    public static List<String> formatMultiline(String key, Object[] args) {
-        List<String> messages = messageFile.getStringList(key);
-        List<String> others = new ArrayList<>();
-
-        messages.forEach(message -> {
-            for (int c=0;c<args.length;c++) {
-                message = message.replace('[' + String.valueOf(c) + ']', String.valueOf(args[c]));
+    @JvmOverloads
+    fun formatMultiline(key: String?, args: Array<Any?> = arrayOfNulls(0)): List<String> {
+        val messages = messageFile.getStringList(key!!)
+        val others: MutableList<String> = ArrayList()
+        messages.forEach(Consumer { m: String ->
+            var message = m
+            for (c in args.indices) {
+                message = message.replace("[$c]", args[c].toString())
             }
-
-            message = ChatColor.translateAlternateColorCodes('&', message);
-            others.add(message);
-        });
-        
-        return others;
+            message = ChatColor.translateAlternateColorCodes('&', message)
+            others.add(message)
+        })
+        return others
     }
-
 }

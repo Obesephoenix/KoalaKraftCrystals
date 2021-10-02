@@ -1,91 +1,80 @@
-package net.obesephoenix.koalakraftcrystals.commands;
+package net.obesephoenix.koalakraftcrystals.commands
 
-import net.obesephoenix.koalakraftcrystals.crystals.Crystal;
-import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler;
-import net.obesephoenix.koalakraftcrystals.util.KKMessage;
-import net.obesephoenix.koalakraftcrystals.util.KKTabCompletionUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
+import net.obesephoenix.koalakraftcrystals.util.KKMessage
+import org.bukkit.Bukkit
+import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler
+import net.obesephoenix.koalakraftcrystals.crystals.Crystal
+import org.bukkit.Sound
+import java.lang.NumberFormatException
+import net.obesephoenix.koalakraftcrystals.util.KKTabCompletionUtil
+import org.bukkit.ChatColor
+import org.bukkit.command.CommandSender
+import org.bukkit.util.StringUtil
+import java.util.ArrayList
+import java.util.function.Consumer
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-public class GiveCrystalCommand extends KKCommand {
-
-    public GiveCrystalCommand() {
-        super("givecrystal", "givecrystal_command", "/kkc givecrystal <player> <crystal> <amount>",
-                "koalakraftcrystals.givecrystal");
-    }
-
-    @Override
-    public boolean execute(CommandSender sender, String... args) {
-        if (args.length < 3) {
-            sender.sendMessage(KKMessage.format("error.invalid-args", new Object[0], false));
-            return true;
+class GiveCrystalCommand : KKCommand(
+    "givecrystal", "givecrystal_command", "/kkc givecrystal <player> <crystal> <amount>",
+    "koalakraftcrystals.givecrystal"
+) {
+    override fun execute(sender: CommandSender, vararg args: String): Boolean {
+        if (args.size < 3) {
+            sender.sendMessage(KKMessage.format("error.invalid-args", arrayOf(), false))
+            return true
         }
-
-        Player player = Bukkit.getPlayer(args[1]);
+        val player = Bukkit.getPlayer(args[1])
         if (player == null) {
-            sender.sendMessage(KKMessage.format("error.no-player", new Object[]{args[1]}, false));
-            return true;
+            sender.sendMessage(KKMessage.format("error.no-player", arrayOf(args[1]), false))
+            return true
         }
-
-        if (args[2].equalsIgnoreCase("all")) {
-            KKCrystalHandler.getCrystals().forEach(crystal -> player.getInventory().addItem(crystal.createItemStack()));
-            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1.0f, 1.0f);
-            sender.sendMessage(KKMessage.format("givecrystal-command.success.all", new Object[]{player.getDisplayName()}));
-            return true;
+        if (args[2].equals("all", ignoreCase = true)) {
+            KKCrystalHandler.getCrystals()
+                .forEach(Consumer { crystal: Crystal -> player.inventory.addItem(crystal.createItemStack()) })
+            player.playSound(player.location, Sound.ENTITY_ITEM_PICKUP, 1.0f, 1.0f)
+            sender.sendMessage(KKMessage.format("givecrystal-command.success.all", arrayOf(player.displayName)))
+            return true
         }
-
-        Crystal crystal = KKCrystalHandler.getCrystalByID(args[2]);
+        val crystal = KKCrystalHandler.getCrystalByID(args[2])
         if (crystal == null) {
-            sender.sendMessage(KKMessage.format("error.no-crystal", new Object[]{args[2]}, false));
-            return true;
+            sender.sendMessage(KKMessage.format("error.no-crystal", arrayOf(args[2]), false))
+            return true
         }
-
-        int amount;
-        if (args.length == 4) {
+        val amount: Int = if (args.size == 4) {
             try {
-                amount = Integer.parseInt(args[3]);
-            } catch (NumberFormatException e) {
-                sender.sendMessage(KKMessage.format("error.invalid-int", new Object[]{args[3]}, false));
-                sender.sendMessage(ChatColor.DARK_RED + this.getUsage());
-                return true;
+                args[3].toInt()
+            } catch (e: NumberFormatException) {
+                sender.sendMessage(KKMessage.format("error.invalid-int", arrayOf(args[3]), false))
+                sender.sendMessage(ChatColor.DARK_RED.toString() + usage)
+                return true
             }
         } else {
-            amount = 1;
+            1
         }
-
-        for (int c=0;c<amount;c++) {
-            player.getInventory().addItem(crystal.createItemStack());
+        for (c in 0 until amount) {
+            player.inventory.addItem(crystal.createItemStack())
         }
-        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1.0f, 1.0f);
-        sender.sendMessage(KKMessage.format("givecrystal-command.success.single", new Object[]{crystal.getID(),
-        amount, player.getDisplayName()}));
-        return true;
+        player.playSound(player.location, Sound.ENTITY_ITEM_PICKUP, 1.0f, 1.0f)
+        sender.sendMessage(
+            KKMessage.format(
+                "givecrystal-command.success.single", arrayOf(
+                    crystal.id,
+                    amount, player.displayName
+                )
+            )
+        )
+        return true
     }
 
-    @Override
-    public List<String> tabComplete(CommandSender sender, String... args) {
-        List<String> options = new ArrayList<>();
-
-        switch (args.length) {
-            case 2:
-                StringUtil.copyPartialMatches(args[1], KKTabCompletionUtil.getOnlinePlayers(), options);
-                break;
-            case 3:
-                List<String> ids = KKTabCompletionUtil.getCrystalIDs();
-                ids.add("all");
-                StringUtil.copyPartialMatches(args[2], ids, options);
-                break;
+    override fun tabComplete(sender: CommandSender, vararg args: String): List<String> {
+        val options: MutableList<String> = ArrayList()
+        when (args.size) {
+            2 -> StringUtil.copyPartialMatches(args[1], KKTabCompletionUtil.onlinePlayers, options)
+            3 -> {
+                val ids: MutableList<String> = KKTabCompletionUtil.crystalIDs.toMutableList()
+                ids.add("all")
+                StringUtil.copyPartialMatches(args[2], ids, options)
+            }
         }
-
-        return options;
+        return options
     }
-
 }

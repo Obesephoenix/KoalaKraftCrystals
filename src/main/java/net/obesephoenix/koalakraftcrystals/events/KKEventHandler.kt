@@ -1,21 +1,19 @@
-package net.obesephoenix.koalakraftcrystals.events;
+package net.obesephoenix.koalakraftcrystals.events
 
-import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.event.Listener
 
-public class KKEventHandler {
-
-    public static void registerEvents(JavaPlugin plugin) {
-        registerEvent(new onEntityDamage(), plugin);
-        registerEvent(new onItemDespawn(), plugin);
-        registerEvent(new onBlockPlace(), plugin);
-        registerEvent(new onItemDrop(), plugin);
-        registerEvent(new onMobEquip(), plugin);
+object KKEventHandler {
+    @JvmStatic
+    fun registerEvents(plugin: JavaPlugin) {
+        registerEvent(OnEntityDamage(), plugin)
+        registerEvent(OnItemDespawn(), plugin)
+        registerEvent(OnBlockPlace(), plugin)
+        registerEvent(OnItemDrop(), plugin)
+        registerEvent(OnMobEquip(), plugin)
     }
 
-    private static void registerEvent(Listener listener, JavaPlugin plugin) {
-        plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+    private fun registerEvent(listener: Listener, plugin: JavaPlugin) {
+        plugin.server.pluginManager.registerEvents(listener, plugin)
     }
-
 }

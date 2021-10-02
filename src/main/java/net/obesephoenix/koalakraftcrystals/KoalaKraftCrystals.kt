@@ -1,32 +1,34 @@
-package net.obesephoenix.koalakraftcrystals;
+package net.obesephoenix.koalakraftcrystals
 
-import net.obesephoenix.koalakraftcrystals.commands.KKCommandHandler;
-import net.obesephoenix.koalakraftcrystals.commands.KKTabCompleter;
-import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler;
-import net.obesephoenix.koalakraftcrystals.events.KKEventHandler;
-import net.obesephoenix.koalakraftcrystals.util.KKFileUtil;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPlugin
+import net.obesephoenix.koalakraftcrystals.commands.KKCommandHandler
+import net.obesephoenix.koalakraftcrystals.commands.KKTabCompleter
+import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler
+import net.obesephoenix.koalakraftcrystals.events.KKEventHandler
+import net.obesephoenix.koalakraftcrystals.util.KKFileUtil
 
-public final class KoalaKraftCrystals extends JavaPlugin {
+class KoalaKraftCrystals : JavaPlugin() {
 
-    public static KoalaKraftCrystals instance;
+    override fun onEnable() {
+        instance = this
 
-    @Override
-    public void onEnable() {
-        instance = this;
+        KKCommandHandler.registerCommands()
+        KKCrystalHandler.registerCrystals()
+        KKEventHandler.registerEvents(this)
 
-        KKCommandHandler.registerCommands();
-        KKCrystalHandler.registerCrystals();
-        KKEventHandler.registerEvents(this);
-        KKFileUtil.getConfigFile();
+        configFile = KKFileUtil.configFile!!
 
-        this.getCommand("kkc").setExecutor(new KKCommandHandler());
-        this.getCommand("kkc").setTabCompleter(new KKTabCompleter());
-
+        getCommand("kkc")!!.setExecutor(KKCommandHandler())
+        getCommand("kkc")!!.tabCompleter = KKTabCompleter()
     }
 
-    @Override
-    public void onDisable() {
+    override fun onDisable() {
         // Plugin shutdown logic
     }
+
+    companion object {
+        lateinit var instance: KoalaKraftCrystals
+        lateinit var configFile: KKFileUtil.CrystalConfigFile
+    }
+
 }

@@ -1,74 +1,64 @@
-package net.obesephoenix.koalakraftcrystals.util;
+package net.obesephoenix.koalakraftcrystals.util
 
-import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals;
-import net.obesephoenix.koalakraftcrystals.crystals.Crystal;
-import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals
+import net.obesephoenix.koalakraftcrystals.crystals.KKCrystalHandler.rawCrystals
+import org.bukkit.configuration.file.FileConfiguration
+import org.bukkit.configuration.file.YamlConfiguration
+import java.io.File
+import java.io.IOException
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
-
-public class KKFileUtil {
-
-    private static CrystalConfigFile configFile = null;
-
-    public static CrystalConfigFile getConfigFile() {
-        if (configFile == null) {
-            configFile = new CrystalConfigFile();
+object KKFileUtil {
+    @JvmStatic
+    var configFile: CrystalConfigFile? = null
+        get() {
+            if (field == null) {
+                field = CrystalConfigFile()
+            }
+            return field
         }
-        return configFile;
-    }
+        private set
 
-    public static class CrystalConfigFile {
+    class CrystalConfigFile {
+        var file: File = File(KoalaKraftCrystals.instance.dataFolder, "/crystals.yml")
+        var config: FileConfiguration
+        fun saveConfig(): FileConfiguration {
+            try {
+                config.save(file)
+            } catch (e: IOException) {
+                e.printStackTrace()
+                KoalaKraftCrystals.instance.logger.severe("Failed to save crystals config!")
+            }
+            return config
+        }
 
-        File file;
-        FileConfiguration config;
+        fun reloadConfig(): FileConfiguration {
+            config = YamlConfiguration.loadConfiguration(file)
+            return config
+        }
 
-        public CrystalConfigFile() {
-            file = new File(KoalaKraftCrystals.instance.getDataFolder(), "/crystals.yml");
+        fun get(): FileConfiguration {
+            return config
+        }
+
+        init {
             if (!file.exists()) {
-                file.getParentFile().mkdirs();
+                file.parentFile.mkdirs()
                 try {
-                    file.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    KoalaKraftCrystals.instance.getLogger().severe("Failed to create config file!");
+                    file.createNewFile()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    KoalaKraftCrystals.instance.logger.severe("Failed to create config file!")
                 }
             }
-
-            config = YamlConfiguration.loadConfiguration(file);
-
-            for (Crystal crystal : KKCrystalHandler.getRawCrystals()) {
-                config.addDefault(crystal.getID() + ".enabled",
-                        true);
+            config = YamlConfiguration.loadConfiguration(file)
+            for (crystal in rawCrystals) {
+                config.addDefault(
+                    crystal.id + ".enabled",
+                    true
+                )
             }
-
-            config.options().copyDefaults(true);
-            this.saveConfig();
+            config.options().copyDefaults(true)
+            saveConfig()
         }
-
-        public FileConfiguration saveConfig() {
-            try {
-                config.save(file);
-            } catch(IOException e) {
-                e.printStackTrace();
-                KoalaKraftCrystals.instance.getLogger().severe("Failed to save crystals config!");
-            }
-            return config;
-        }
-
-        public FileConfiguration reloadConfig() {
-            config = YamlConfiguration.loadConfiguration(file);
-            return config;
-        }
-
-        public FileConfiguration get() {
-            return config;
-        }
-
     }
-
 }

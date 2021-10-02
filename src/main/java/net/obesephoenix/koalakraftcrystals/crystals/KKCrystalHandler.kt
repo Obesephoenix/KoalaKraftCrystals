@@ -1,92 +1,87 @@
-package net.obesephoenix.koalakraftcrystals.crystals;
+package net.obesephoenix.koalakraftcrystals.crystals
 
-import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals;
-import net.obesephoenix.koalakraftcrystals.util.KKFileUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
+import net.obesephoenix.koalakraftcrystals.crystals.GodModeHandler.isGodMode
+import net.obesephoenix.koalakraftcrystals.crystals.GodModeHandler.setGodMode
+import org.bukkit.NamespacedKey
+import net.obesephoenix.koalakraftcrystals.KoalaKraftCrystals
+import org.bukkit.scheduler.BukkitRunnable
+import org.bukkit.entity.Player
+import org.bukkit.Bukkit
+import org.bukkit.persistence.PersistentDataType
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
+import net.obesephoenix.koalakraftcrystals.util.KKFileUtil
+import org.bukkit.inventory.ItemStack
+import java.util.ArrayList
+import java.util.function.Consumer
 
-import javax.naming.Name;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+object KKCrystalHandler {
+    private val crystals: MutableList<Crystal> = ArrayList()
 
-public class KKCrystalHandler {
+    val crystalID_key = NamespacedKey(KoalaKraftCrystals.instance, "crystal_id")
 
-    private static final List<Crystal> crystals = new ArrayList<>();
-    public static final NamespacedKey crystalID_key = new NamespacedKey(KoalaKraftCrystals.instance, "crystal_id");
-
-    public static void registerCrystals() {
-        crystals.clear();
-
-        registerCrystal(new TopazCrystal());
-        registerCrystal(new SapphireCrystal());
-        registerCrystal(new OnyxCrystal());
-        registerCrystal(new EmeraldCrystal());
-        registerCrystal(new RubyCrystal());
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.getInventory().forEach(item -> {
-                        if (item == null) return;
-                        ItemMeta meta = item.getItemMeta();
-                        if(meta == null) return;
-
-                        if(meta.getPersistentDataContainer().has(KKCrystalHandler.crystalID_key, PersistentDataType.STRING)) {
-                            String id = meta.getPersistentDataContainer().get(KKCrystalHandler.crystalID_key, PersistentDataType.STRING);
-                            Crystal crystal = KKCrystalHandler.getCrystalByID(id);
-
-                            assert crystal != null;
+    fun registerCrystals() {
+        crystals.clear()
+        registerCrystal(TopazCrystal())
+        registerCrystal(SapphireCrystal())
+        registerCrystal(OnyxCrystal())
+        registerCrystal(EmeraldCrystal())
+        registerCrystal(RubyCrystal())
+        object : BukkitRunnable() {
+            override fun run() {
+                for (player in Bukkit.getOnlinePlayers()) {
+                    player.inventory.forEach(Consumer forEach@ { item: ItemStack? ->
+                        if (item == null) return@forEach
+                        val meta = item.itemMeta ?: return@forEach
+                        if (meta.persistentDataContainer.has(crystalID_key, PersistentDataType.STRING)) {
+                            val id = meta.persistentDataContainer.get(crystalID_key, PersistentDataType.STRING)
+                            val crystal = getCrystalByID(id)!!
                             if (crystal.grantEffects(player)) {
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 340, 1,
-                                        false, false, true));
+                                player.addPotionEffect(
+                                    PotionEffect(
+                                        PotionEffectType.INCREASE_DAMAGE, 340, 1,
+                                        false, false, true
+                                    )
+                                )
                             }
                         }
-                    });
-                    List<Crystal> playerCrystals = KKCrystalHandler.getCrystalsFromPlayer(player);
-                    if (playerCrystals.size() >= crystals.size()) {
-                        if (!GodModeHandler.isGodMode(player)) {
-                            GodModeHandler.setGodMode(player);
+                    })
+                    val playerCrystals = getCrystalsFromPlayer(player)
+                    if (playerCrystals.size >= crystals.size) {
+                        if (!isGodMode(player)) {
+                            setGodMode(player)
                         }
-                    } else if (GodModeHandler.isGodMode(player)) {
-                        GodModeHandler.setGodMode(player, false);
+                    } else if (isGodMode(player)) {
+                        setGodMode(player, false)
                     }
                 }
             }
-        }.runTaskTimer(KoalaKraftCrystals.instance, 0L, 120L);
+        }.runTaskTimer(KoalaKraftCrystals.instance, 0L, 120L)
     }
 
-    private static void registerCrystal(Crystal crystal) {
-        crystals.add(crystal);
+    private fun registerCrystal(crystal: Crystal) {
+        crystals.add(crystal)
     }
 
 
-    public static List<Crystal> getCrystals() {
-        List<Crystal> var1 = new ArrayList<>();
-        crystals.forEach(crystal -> {
-            if(!KKFileUtil.getConfigFile().get().getBoolean(crystal.getID() + ".enabled")) {
-                return;
+    fun getCrystals(): List<Crystal> {
+        val var1: MutableList<Crystal> = ArrayList()
+        crystals.forEach(Consumer forEach@ { crystal: Crystal ->
+            if (!KKFileUtil.configFile!!.get().getBoolean(crystal.id + ".enabled")) {
+                return@forEach
             }
-            var1.add(crystal);
-        });
-        return var1;
+            var1.add(crystal)
+        })
+        return var1
     }
 
-    public static Crystal getCrystal(String name) {
-        for(Crystal crystal : crystals) {
-            if (crystal.getName().equalsIgnoreCase(name)) {
-                return crystal;
+    fun getCrystal(name: String?): Crystal? {
+        for (crystal in crystals) {
+            if (crystal.name.equals(name, ignoreCase = true)) {
+                return crystal
             }
         }
-        return null;
+        return null
     }
 
     /**
@@ -94,62 +89,55 @@ public class KKCrystalHandler {
      * Provides a list of all existing crystals, for most use cases use getCrystal()
      * @return A list of all existing crystals
      */
-    public static List<Crystal> getRawCrystals() {
-        return crystals;
-    }
+    val rawCrystals: List<Crystal>
+        get() = crystals
 
-    public static Crystal getCrystalByID(String id) {
-        for(Crystal crystal : crystals) {
-            if (crystal.getID().equalsIgnoreCase(id)) {
-                return crystal;
+    fun getCrystalByID(id: String?): Crystal? {
+        for (crystal in crystals) {
+            if (crystal.id.equals(id, ignoreCase = true)) {
+                return crystal
             }
         }
-        return null;
+        return null
     }
 
-    public static List<Crystal> getCrystalsFromPlayer(Player player) {
-        List<Crystal> playerCrystals = new ArrayList<>();
-
-        player.getInventory().forEach(item -> {
-            if (item == null) return;
-            ItemMeta meta = item.getItemMeta();
-            if (meta == null) return;
-
-            if (meta.getPersistentDataContainer().has(KKCrystalHandler.crystalID_key, PersistentDataType.STRING)) {
-                Crystal crystal = KKCrystalHandler.getCrystalByID(meta.getPersistentDataContainer().get(KKCrystalHandler.crystalID_key,
-                        PersistentDataType.STRING));
-                playerCrystals.add(crystal);
+    fun getCrystalsFromPlayer(player: Player): List<Crystal?> {
+        val playerCrystals: MutableList<Crystal?> = ArrayList()
+        player.inventory.forEach(Consumer forEach@ { item: ItemStack? ->
+            if (item == null) return@forEach
+            val meta = item.itemMeta ?: return@forEach
+            if (meta.persistentDataContainer.has(crystalID_key, PersistentDataType.STRING)) {
+                val crystal = getCrystalByID(
+                    meta.persistentDataContainer.get(
+                        crystalID_key,
+                        PersistentDataType.STRING
+                    )
+                )
+                playerCrystals.add(crystal)
             }
-        });
-
-        return playerCrystals;
+        })
+        return playerCrystals
     }
 
-    public static List<Player> getPlayerFromCrystal(Crystal crystal) {
-        List<Player> players = new ArrayList<>();
-
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            for (ItemStack i : p.getInventory()) {
-                if (i == null) continue;
-                ItemMeta meta = i.getItemMeta();
-                if (meta == null) continue;
-
-                if (meta.getPersistentDataContainer().has(KKCrystalHandler.crystalID_key, PersistentDataType.STRING)) {
-                    if (Objects.equals(meta.getPersistentDataContainer().get(KKCrystalHandler.crystalID_key, PersistentDataType.STRING), crystal.getID())) {
-                        players.add(p);
+    fun getPlayerFromCrystal(crystal: Crystal): List<Player> {
+        val players: MutableList<Player> = ArrayList()
+        for (p in Bukkit.getOnlinePlayers()) {
+            for (i in p.inventory) {
+                if (i == null) continue
+                val meta = i.itemMeta ?: continue
+                if (meta.persistentDataContainer.has(crystalID_key, PersistentDataType.STRING)) {
+                    if (meta.persistentDataContainer.get(crystalID_key, PersistentDataType.STRING) == crystal.id) {
+                        players.add(p)
                     }
                 }
             }
         }
-
-        return players;
+        return players
     }
 
-    public static boolean isCrystal(ItemStack i) {
-        ItemMeta meta = i.getItemMeta();
-        if (meta == null) return false;
-
-        return meta.getPersistentDataContainer().has(KKCrystalHandler.crystalID_key, PersistentDataType.STRING);
+    @JvmStatic
+    fun isCrystal(i: ItemStack): Boolean {
+        val meta = i.itemMeta ?: return false
+        return meta.persistentDataContainer.has(crystalID_key, PersistentDataType.STRING)
     }
-
 }

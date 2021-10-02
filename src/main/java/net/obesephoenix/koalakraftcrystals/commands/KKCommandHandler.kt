@@ -1,70 +1,76 @@
-package net.obesephoenix.koalakraftcrystals.commands;
+package net.obesephoenix.koalakraftcrystals.commands
 
-import net.obesephoenix.koalakraftcrystals.util.KKMessage;
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.CommandExecutor
+import net.obesephoenix.koalakraftcrystals.commands.KKCommand
+import net.obesephoenix.koalakraftcrystals.commands.KKCommandHandler
+import net.obesephoenix.koalakraftcrystals.util.KKMessage
+import net.obesephoenix.koalakraftcrystals.commands.DefaultCommand
+import net.obesephoenix.koalakraftcrystals.commands.GiveCrystalCommand
+import net.obesephoenix.koalakraftcrystals.commands.CrystalInfoCommand
+import net.obesephoenix.koalakraftcrystals.commands.DisableCrystalCommand
+import net.obesephoenix.koalakraftcrystals.commands.ReverseNetheriteCommand
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
+import java.util.ArrayList
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class KKCommandHandler implements CommandExecutor {
-
-    private static final List<KKCommand> commands = new ArrayList<>();
-
-    public static void registerCommands() {
-        registerCommand(new DefaultCommand());
-        registerCommand(new GiveCrystalCommand());
-        registerCommand(new CrystalInfoCommand());
-        registerCommand(new DisableCrystalCommand());
-        registerCommand(new ReverseNetheriteCommand());
-    }
-
-    public static void registerCommand(KKCommand command) {
-        commands.add(command);
-    }
-
-    public static List<KKCommand> getCommands() {return commands;}
-
-    public static KKCommand getCommandByID(String id) {
-        for (KKCommand command : commands) {
-            if (command.getID().equalsIgnoreCase(id)) {
-                return command;
-            }
-        }
-        return null;
-    }
-
-    public static KKCommand getCommand(String name) {
-        for (KKCommand command : commands) {
-            if (command.getName().equalsIgnoreCase(name)) {
-                return command;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if (!label.equals("kkc")) return false;
-
-        if (args.length != 0) {
-            for (KKCommand c : commands) {
-                if (args[0].equalsIgnoreCase(c.getName())) {
-                    if (commandSender.hasPermission(c.getPermission())) {
-                        return c.execute(commandSender, args);
+class KKCommandHandler : CommandExecutor {
+    override fun onCommand(
+        commandSender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<String>
+    ): Boolean {
+        if (label != "kkc") return false
+        if (args.isNotEmpty()) {
+            for (c in commands) {
+                if (args[0].equals(c.name, ignoreCase = true)) {
+                    return if (commandSender.hasPermission(c.permission)) {
+                        c.execute(commandSender, *args)
                     } else {
-                        commandSender.sendMessage(KKMessage.format("error.no-permission"));
-                        return true;
+                        commandSender.sendMessage(KKMessage.format("error.no-permission"))
+                        true
                     }
                 }
             }
         }
-
-        return getCommand("default").execute(commandSender, args);
+        return getCommand("default")!!.execute(commandSender, *args)
     }
 
+    companion object {
+        private val commands: MutableList<KKCommand> = ArrayList()
+
+        fun registerCommands() {
+            registerCommand(DefaultCommand())
+            registerCommand(GiveCrystalCommand())
+            registerCommand(CrystalInfoCommand())
+            registerCommand(DisableCrystalCommand())
+            registerCommand(ReverseNetheriteCommand())
+        }
+
+        private fun registerCommand(command: KKCommand) {
+            commands.add(command)
+        }
+
+        fun getCommands(): List<KKCommand> {
+            return commands
+        }
+
+        fun getCommandByID(id: String?): KKCommand? {
+            for (command in commands) {
+                if (command.id.equals(id, ignoreCase = true)) {
+                    return command
+                }
+            }
+            return null
+        }
+
+        fun getCommand(name: String?): KKCommand? {
+            for (command in commands) {
+                if (command.name.equals(name, ignoreCase = true)) {
+                    return command
+                }
+            }
+            return null
+        }
+    }
 }

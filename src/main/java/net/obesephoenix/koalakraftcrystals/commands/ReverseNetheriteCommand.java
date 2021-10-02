@@ -4,8 +4,10 @@ import net.obesephoenix.koalakraftcrystals.util.KKMessage;
 import net.obesephoenix.koalakraftcrystals.util.KKTabCompletionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
@@ -33,13 +35,16 @@ public class ReverseNetheriteCommand extends KKCommand {
 
         player.getInventory().forEach(item -> {
             if (item == null) return;
-
             if (item.getType().toString().toLowerCase().contains("netherite")) {
-                Material mat = Material.getMaterial(item.getType().toString().replace("netherite", "diamond"));
+                Material mat = Material.getMaterial(item.getType().toString().replace("NETHERITE", "DIAMOND"));
                 if (mat == null) return;
                 item.setType(mat);
             }
         });
+
+        player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 3.0f, 1.0f);
+        List<String> var1 = KKMessage.formatMultiline("reversenetherite-command.success", new Object[]{player.getDisplayName()});
+        var1.forEach(sender::sendMessage);
 
         return true;
     }

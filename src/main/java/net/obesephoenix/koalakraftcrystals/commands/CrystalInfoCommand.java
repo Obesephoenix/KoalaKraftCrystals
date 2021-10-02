@@ -51,7 +51,6 @@ public class CrystalInfoCommand extends KKCommand {
             } else {
                 sender.sendMessage(KKMessage.format("crystalinfo-command.success.player.none", new Object[]{player.getDisplayName()}));
             }
-            return true;
         } else {
             List<Player> targets = KKCrystalHandler.getPlayerFromCrystal(crystal);
 
@@ -61,8 +60,8 @@ public class CrystalInfoCommand extends KKCommand {
                 sender.sendMessage(KKMessage.format("crystalinfo-command.success.crystal.found", new Object[]{crystal.getID()}));
                 targets.forEach(target -> sender.sendMessage(ChatColor.GREEN + " - " + target.getDisplayName()));
             }
-            return true;
         }
+        return true;
     }
 
         

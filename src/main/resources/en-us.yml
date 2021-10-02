@@ -25,3 +25,7 @@ disabledcrystal-command:
   success:
     - "&aSuccessfully disabled &6[0]&a!"
     - "&aTo ensure the full changes take effect, please use &6/reload confirm&a!"
+reversenetherite-command:
+  success:
+    - "&aSuccessfully converted all &6[0]&a's items to diamond!"
+    - "&aRemember - netherite ingots will not be converted! Only tools/armour!"

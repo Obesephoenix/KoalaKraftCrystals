@@ -14,6 +14,8 @@ permissions:
     children:
       koalakraftcrystals.givecrystal: true
       koalakraftcyrstals.crystalinfo: true
+      koalakraftcrystals.disablecrystal: true
+      koalakraftcrystals.reversenetherite: true
   koalakraftcrystals.givecrystal:
     description: Gives permission to use /kkc givecrystal!
     default: op

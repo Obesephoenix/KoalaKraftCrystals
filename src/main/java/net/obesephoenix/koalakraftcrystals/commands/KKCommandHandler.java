@@ -20,6 +20,7 @@ public class KKCommandHandler implements CommandExecutor {
         registerCommand(new GiveCrystalCommand());
         registerCommand(new CrystalInfoCommand());
         registerCommand(new DisableCrystalCommand());
+        registerCommand(new ReverseNetheriteCommand());
     }
 
     public static void registerCommand(KKCommand command) {

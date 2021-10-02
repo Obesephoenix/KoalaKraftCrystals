@@ -23,5 +23,8 @@ permissions:
   koalakraftcrystals.disablecrystal:
     description: Gives permission to use /kkc disablecrystal!
     default: op
+  koalakraftcrystals.reversenetherite:
+    description: Reverts all netherite items on a player to diamond.
+    default: op
   koalakraftcrystals.default:
     default: true

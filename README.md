@@ -21,4 +21,5 @@ KoalaKraft crystals also adds several useful utility commands to help an admin d
 <ol>
   <li>DisableCrystal - Completley removes a crystal from the game, also wiping it from all player inventories!</li>
   <li>CrystalInfo - Gives info on who possesses which crystals, and vice-versa!</li>
+  <li>ReverseNetherite - Turns all netherite a player owns to diamond!</li>
 </ol>

@@ -11,6 +11,7 @@ public class KKEventHandler {
         registerEvent(new onItemDespawn(), plugin);
         registerEvent(new onBlockPlace(), plugin);
         registerEvent(new onItemDrop(), plugin);
+        registerEvent(new onMobEquip(), plugin);
     }
 
     private static void registerEvent(Listener listener, JavaPlugin plugin) {
